@@ -1,87 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Ticket | EventEase</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>E-Ticket | EventEase</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
-  <style>
-    body {
-      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), 
-                  url('img/browse-bk1.jpg') center/cover no-repeat fixed;
-      min-height: 100vh;
-      color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<style>
+body {
+	background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+		url('img/browse-bk1.jpg') center/cover no-repeat fixed;
+	min-height: 100vh;
+	color: #fff;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .container { max-width: 560px; }
-    .progress { height: 32px; border-radius: 50px; margin-bottom: 30px; background: rgba(255,255,255,0.1); }
-    .progress-bar { background: #28a745; font-weight: 600; border-radius: 50px; width: 100% !important; }
+.container {
+	max-width: 560px;
+}
 
-    .ticket-card {
-      background: rgba(0, 0, 0, 0.88); border-radius: 24px; padding: 40px 32px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-    }
+.progress {
+	height: 32px;
+	border-radius: 50px;
+	margin-bottom: 30px;
+	background: rgba(255, 255, 255, 0.1);
+}
 
-    .title { font-size: 2.1rem; font-weight: 700; color: #28a745; margin-bottom: 8px; }
-    .subtitle { font-size: 1.1rem; color: #ddd; margin-bottom: 30px; }
+.progress-bar {
+	background: #28a745;
+	font-weight: 600;
+	border-radius: 50px;
+	width: 100% !important;
+}
 
-    .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.15); font-size: 1.05rem; }
-    .info-row:last-child { border-bottom: none; }
-    .info-label { color: #ccc; font-weight: 500; }
-    .info-value { font-weight: 600; color: #fff; text-align: right; }
+.ticket-card {
+	background: rgba(0, 0, 0, 0.88);
+	border-radius: 24px;
+	padding: 40px 32px;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	text-align: center;
+}
 
-    .download-btn {
-      background: #ffc107; color: #212529; border: none; font-weight: 600;
-      padding: 14px 20px; border-radius: 50px; font-size: 1.1rem; width: 100%;
-      margin-top: 20px;
-    }
+.title {
+	font-size: 2.1rem;
+	font-weight: 700;
+	color: #28a745;
+	margin-bottom: 8px;
+}
 
-    .redirect-note { margin-top: 24px; font-size: 0.9rem; color: #aaa; }
+.subtitle {
+	font-size: 1.1rem;
+	color: #ddd;
+	margin-bottom: 30px;
+}
 
-    @media (max-width: 576px) {
-      .ticket-card { margin: 20px; padding: 30px 20px; }
-      .title { font-size: 1.8rem; }
-    }
-  </style>
+.info-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 12px 0;
+	border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+	font-size: 1.05rem;
+}
+
+.info-row:last-child {
+	border-bottom: none;
+}
+
+.info-label {
+	color: #ccc;
+	font-weight: 500;
+}
+
+.info-value {
+	font-weight: 600;
+	color: #fff;
+	text-align: right;
+}
+
+.download-btn {
+	background: #ffc107;
+	color: #212529;
+	border: none;
+	font-weight: 600;
+	padding: 14px 20px;
+	border-radius: 50px;
+	font-size: 1.1rem;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.redirect-note {
+	margin-top: 24px;
+	font-size: 0.9rem;
+	color: #aaa;
+}
+
+@media ( max-width : 576px) {
+	.ticket-card {
+		margin: 20px;
+		padding: 30px 20px;
+	}
+	.title {
+		font-size: 1.8rem;
+	}
+}
+</style>
 </head>
 <body>
 
-<div id="header"></div>
-<script>
+	<div id="header"></div>
+	<script>
   fetch("header.html")
     .then(r => r.text())
     .then(html => document.getElementById("header").innerHTML = html)
     .catch(() => {});
 </script>
 
-<div class="container py-4">
-  <div class="progress">
-    <div class="progress-bar">Step 3: E-Ticket Generated</div>
-  </div>
+	<div class="container py-4">
+		<div class="progress">
+			<div class="progress-bar">Step 3: E-Ticket Generated</div>
+		</div>
 
-  <div class="ticket-card">
-    <h1 class="title">Congratulations!</h1>
-    <p class="subtitle">Your tickets are confirmed and ready.</p>
+		<div class="ticket-card">
+			<h1 class="title">Congratulations!</h1>
+			<p class="subtitle">Your tickets are confirmed and ready.</p>
 
-    <div id="ticketInfo" class="mt-4"></div>
+			<div id="ticketInfo" class="mt-4"></div>
 
-    <button id="downloadBtn" class="download-btn">
-      Download E-Ticket (PDF)
-    </button>
+			<button id="downloadBtn" class="download-btn">Download
+				E-Ticket (PDF)</button>
 
-    <p class="redirect-note">
-      You will be redirected in <span id="countdown">10</span> seconds...
-    </p>
-  </div>
-</div>
+			<p class="redirect-note">
+				You will be redirected in <span id="countdown">10</span> seconds...
+			</p>
+		</div>
+	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const user = params.get('user') || 'Guest';

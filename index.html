@@ -1,148 +1,1177 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Booking System | EventEase</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Event Booking System | EventEase</title>
+<meta name="description" content="EventEase — Event Booking System" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+	rel="stylesheet">
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-</head>
 <style>
-/* Body */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
+:root {
+	--accent-1: #5b2fe6;
+	--accent-2: #ff8a00;
+	--text-max-width: 1100px;
+	--page-offset: 0px;
 }
 
-/* Hero Section */
-.hero {
-  min-height: 100vh;
-  background: url('img/browse-bk1.jpg') no-repeat center center / cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0 20px;
-  position: relative;
-  overflow: hidden;
+html, body {
+	height: 100%;
+	margin: 0;
+	font-family: 'Poppins', sans-serif;
+	background: #000;
+	color: #fff;
 }
 
-/* Hero Titles - Bigger font like original design */
+.header-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1400;
+	background: linear-gradient(180deg, rgba(10, 3, 8, 0.98),
+		rgba(10, 3, 8, 0.94));
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+	backdrop-filter: blur(6px);
+}
+
+.feature-strip {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 18px;
+	padding: 10px 14px;
+	background: linear-gradient(90deg, rgba(91, 47, 230, 0.05),
+		rgba(255, 138, 0, 0.03));
+	border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.feature-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 8px 12px;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.feature-icon {
+	width: 40px;
+	height: 40px;
+	border-radius: 999px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+	color: #fff;
+	box-shadow: 0 8px 20px rgba(91, 47, 230, 0.12);
+}
+
+.feature-text {
+	font-weight: 700;
+	font-size: 0.95rem;
+	color: #fff;
+}
+
+.feature-sub {
+	font-size: 0.82rem;
+	color: rgba(255, 255, 255, 0.8);
+	margin-top: 2px;
+}
+
+/* Hero / carousel */
+.hero-carousel {
+	margin-top: var(--page-offset);
+	height: calc(100vh - var(--page-offset));
+	min-height: 560px;
+	position: relative;
+	overflow: hidden;
+}
+
+.carousel, .carousel-inner, .carousel-item {
+	height: 100%;
+}
+
+.carousel-item {
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	transition: opacity 1s ease;
+}
+
+.hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.36) 0%,
+		rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.66) 100%);
+	z-index: 1;
+}
+
+.hero-content {
+	position: absolute;
+	z-index: 2;
+	top: 44%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 92%;
+	max-width: var(--text-max-width);
+	text-align: center;
+	padding: 0 1rem;
+}
+
+.hero-kicker {
+	display: inline-block;
+	background: rgba(255, 255, 255, 0.06);
+	padding: 6px 14px;
+	border-radius: 999px;
+	font-weight: 800;
+	color: rgba(255, 255, 255, 0.95);
+	margin-bottom: .6rem;
+	letter-spacing: .6px;
+}
+
 .hero-title {
-  font-size: clamp(3rem, 10vw, 6rem);
-  font-weight: 1000;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
-  margin-bottom: 10px;
-  margin-right:550px;
+	font-weight: 900;
+	line-height: .95;
+	margin: 0;
+	color: #fff;
+	font-size: clamp(2.8rem, 8vw, 6.4rem);
+	text-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+	opacity: 0;
+	transform: translateY(14px);
+	transition: opacity .55s, transform .55s;
 }
 
-.hero-subtitle {
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 1000;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
-  margin-bottom: 10px;
-  margin-left:120px;
+.gradient {
+	background: linear-gradient(90deg, var(--accent-1) 0%, #c43ddc 45%,
+		var(--accent-2) 85%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	display: inline-block;
+	padding: 0 6px;
+	filter: drop-shadow(0 10px 24px rgba(255, 140, 0, 0.09));
 }
 
-.hero-welcome {
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
-  margin-bottom: 25px;
-}
-
-/* Animated EventEase */
-.eventease {
-  display: inline-block;
-  color: #FFC107;
-  font-weight: 900;
-  animation: blinkExpand 1s infinite;
-  text-shadow: 0 0 10px #FFC107, 0 0 20px #FFC107, 0 0 30px #FFC107;
-}
-
-@keyframes blinkExpand {
-  0%   { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #FFC107; }
-  25%  { opacity: 0.6; transform: scale(1.05); text-shadow: 0 0 20px #FFC107; }
-  50%  { opacity: 1; transform: scale(1.1); text-shadow: 0 0 30px #FFC107, 0 0 40px #FFC107; }
-  75%  { opacity: 0.6; transform: scale(1.05); text-shadow: 0 0 20px #FFC107; }
-  100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #FFC107; }
-}
-
-/* Hero Description */
 .hero-desc {
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+	margin-top: 18px;
+	color: #f1f1f1;
+	font-size: clamp(.95rem, 1.8vw, 1.2rem);
+	max-width: 860px;
+	margin-left: auto;
+	margin-right: auto;
+	text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+	opacity: 0;
+	transform: translateY(12px);
+	transition: opacity .6s, transform .6s;
 }
 
-/* Button */
-.btn-warning {
-  font-weight: 700;
-  border-radius: 50px;
-  padding: 12px 30px;
-  font-size: 1.3rem;
-  transition: 0.3s;
+.hero-actions {
+	margin-top: 26px;
+	display: flex;
+	gap: 16px;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	opacity: 0;
+	transform: translateY(12px);
+	transition: opacity .6s, transform .6s;
 }
 
-.btn-warning:hover {
-  background-color: #e6ac00;
+.cta-btn {
+	border-radius: 999px;
+	padding: 12px 32px;
+	font-weight: 700;
+	font-size: 1.05rem;
+	border: none;
+	background: linear-gradient(90deg, #fff, #f3f3f3);
+	color: #111;
+	cursor: pointer;
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+	transition: transform .18s, box-shadow .18s;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-  .hero-title { font-size: clamp(2.5rem, 12vw, 5rem); }
-  .hero-subtitle { font-size: clamp(2rem, 10vw, 4rem); }
-  .hero-welcome { font-size: clamp(1.5rem, 8vw, 3rem); }
-  .hero-desc { font-size: clamp(1rem, 4vw, 1.3rem); }
-  .btn-warning { padding: 10px 25px; font-size: 1.1rem; }
+.cta-btn:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
 }
 
-@media (max-width: 576px) {
-  .hero-title { font-size: clamp(2rem, 14vw, 4rem); }
-  .hero-subtitle { font-size: clamp(1.8rem, 12vw, 3.5rem); }
-  .hero-welcome { font-size: clamp(1.2rem, 10vw, 2.5rem); }
-  .hero-desc { font-size: clamp(0.9rem, 5vw, 1.2rem); }
-  .btn-warning { padding: 8px 20px; font-size: 1rem; }
+.cta-sub {
+	color: rgba(255, 255, 255, 0.92);
+	font-weight: 600;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
+.carousel-indicators {
+	bottom: 18px;
+}
+
+.carousel-indicators [data-bs-target] {
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.35);
+	border: none;
+}
+
+.carousel-indicators .active {
+	background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+	box-shadow: 0 8px 22px rgba(91, 47, 230, 0.16);
+}
+
+/* Reviews / cards */
+#customer-reviews {
+	background: #0b0b0b;
+	padding-top: 56px;
+	padding-bottom: 56px;
+}
+
+.review-card {
+	border: none;
+	border-radius: 14px;
+	overflow: hidden;
+	color: #eff0f3;
+	background: linear-gradient(180deg, rgba(32, 22, 48, 0.95),
+		rgba(46, 24, 66, 0.95));
+	box-shadow: 0 10px 30px rgba(5, 5, 10, 0.6);
+	transition: transform .28s, box-shadow .28s;
+}
+
+.review-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 18px 50px rgba(10, 8, 20, 0.7);
+}
+
+.review-card .card-body {
+	min-height: 160px;
+	padding: 20px;
+	color: #e9e7ff;
+}
+
+.rating {
+	font-weight: 900;
+	color: #fff;
+}
+
+.score {
+	color: #FFD54F;
+	margin-left: 6px;
+	font-weight: 800;
+}
+
+.pill {
+	background: rgba(255, 255, 255, 0.06);
+	color: #fff;
+	padding: 6px 10px;
+	border-radius: 18px;
+	font-weight: 700;
+	font-size: 0.88rem;
+}
+
+.card-text {
+	color: #e6e4f8;
+	opacity: 0.95;
+	line-height: 1.5;
+	margin-top: 8px;
+}
+
+/* About & queries sections have inline background styling for clarity (kept as in original) */
+
+/* Footer */
+footer#siteFooter {
+	background: linear-gradient(180deg, #120014 0%, #1f0330 90%);
+	color: #e7dff6;
+	padding: 56px 0 28px;
+}
+
+.social-pill {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	text-decoration: none;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+	transition: transform .14s, filter .14s;
+	font-size: 16px;
+}
+
+.social-pill:hover {
+	transform: translateY(-4px) scale(1.04);
+	filter: brightness(1.08);
+}
+
+/* Misc responsive tweaks */
+@media ( max-width :1200px) {
+	.hero-content {
+		top: 46%;
+	}
+	.hero-title {
+		font-size: clamp(2.6rem, 9.5vw, 5.6rem);
+	}
+}
+
+@media ( max-width :768px) {
+	.hero-content {
+		top: 48%;
+		transform: translate(-50%, -50%);
+	}
+	.hero-title {
+		font-size: clamp(2rem, 11vw, 3.6rem);
+		line-height: 1;
+	}
+	.hero-desc {
+		font-size: 0.95rem;
+		padding: 0 12px;
+	}
+	.carousel-indicators {
+		bottom: 12px;
+	}
+	.feature-strip {
+		padding: 8px 10px;
+	}
+}
+
+@media ( max-width :480px) {
+	.hero-content {
+		top: 50%;
+	}
+	.hero-title {
+		font-size: clamp(1.6rem, 14vw, 2.8rem);
+	}
+	.hero-desc {
+		font-size: 0.88rem;
+	}
+	.feature-strip {
+		flex-direction: column;
+		gap: 8px;
+	}
+}
 </style>
+</head>
+
 <body>
+	<div class="header-wrapper" id="headerWrapper">
+		<div id="header"></div>
 
-  <!-- Header -->
-  <div id="header"></div>
-  <script>
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("header").innerHTML = data;
-      });
+		<div class="feature-strip" id="featureStrip">
+			<div class="feature-item">
+				<div class="feature-icon">🎫</div>
+				<div>
+					<div class="feature-text">Instant e-Tickets</div>
+					<div class="feature-sub">Scan & go — no queues</div>
+				</div>
+			</div>
+			<div class="feature-item">
+				<div class="feature-icon">🔒</div>
+				<div>
+					<div class="feature-text">Secure Payments</div>
+					<div class="feature-sub">Trusted checkout</div>
+				</div>
+			</div>
+			<div class="feature-item">
+				<div class="feature-icon">⭐</div>
+				<div>
+					<div class="feature-text">Top Rated</div>
+					<div class="feature-sub">4.8/5 • 10k+ reviews</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="hero-carousel" aria-label="EventEase hero">
+		<div id="heroCarousel" class="carousel slide carousel-fade"
+			data-bs-ride="carousel" data-bs-interval="10000"
+			data-bs-pause="hover">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#heroCarousel"
+					data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#heroCarousel"
+					data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#heroCarousel"
+					data-bs-slide-to="2" aria-label="Slide 3"></button>
+				<button type="button" data-bs-target="#heroCarousel"
+					data-bs-slide-to="3" aria-label="Slide 4"></button>
+			</div>
+
+			<div class="carousel-inner">
+				<div class="carousel-item active"
+					style="background-image: url('img/slide1.jpg');"></div>
+				<div class="carousel-item"
+					style="background-image: url('img/slide2.jpg');"></div>
+				<div class="carousel-item"
+					style="background-image: url('img/slide3.jpg');"></div>
+				<div class="carousel-item"
+					style="background-image: url('img/slide4.jpg');"></div>
+			</div>
+
+			<div class="hero-overlay" aria-hidden="true"></div>
+
+			<div class="hero-content" id="heroContent">
+				<div class="hero-kicker">EVENTEASE</div>
+				<h1 class="hero-title" id="heroTitle">
+					Event<br>Booking, <span class="gradient">Simplified</span>
+				</h1>
+
+				<p class="hero-desc" id="heroDesc">EventEase’s all-in-one event
+					management software simplifies event planning and elevates the
+					attendee experience. Discover, book, and run events with confidence
+					— from concerts and conferences to theatre and festivals.</p>
+
+				<div class="hero-actions" id="heroActions">
+					<button class="cta-btn" id="getStartedBtn">Get started</button>
+					<a class="cta-sub" href="#about-us">See features</a>
+				</div>
+
+				<style>
+.cta-btn {
+	position: relative;
+	z-index: 10;
+	pointer-events: auto;
+	cursor: pointer;
+}
+
+.hero-overlay {
+	pointer-events: none;
+}
+</style>
+
+				<script>
+        document.getElementById('getStartedBtn').addEventListener('click', function() {
+         window.location.href = 'register.html';
+           });
+       </script>
+
+			</div>
+		</div>
+	</section>
+
+	<section id="customer-reviews" class="py-5"
+		aria-labelledby="reviewsHeading">
+		<div class="container-fluid px-lg-5">
+			<h6 id="reviewsHeading" class="text-muted text-center mb-2"
+				style="opacity: 0.7">CLIENT REVIEWS</h6>
+			<h2 class="text-center text-white mb-5">What people are saying</h2>
+
+			<div id="reviewsCarousel" class="carousel slide"
+				data-bs-ride="carousel" data-bs-interval="8000">
+				<div class="carousel-inner">
+					<!-- Slide 1 -->
+					<div class="carousel-item active">
+						<div class="row gx-4 justify-content-center">
+							<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+								<div class="card review-card h-100">
+									<div class="card-body">
+										<div
+											class="d-flex justify-content-between align-items-start mb-2">
+											<div>
+												<div class="rating">
+													★★★★★ <span class="score">5.0</span>
+												</div>
+												<small class="text-muted">Verified • 2023-06-10</small>
+											</div>
+											<div class="pill">Reliability</div>
+										</div>
+										<p class="card-text">"Great website — easy to navigate and
+											fast. Booking process was smooth and straightforward."</p>
+										<div class="mt-3 fw-bold">— Ashok K.</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+								<div class="card review-card h-100">
+									<div class="card-body">
+										<div
+											class="d-flex justify-content-between align-items-start mb-2">
+											<div>
+												<div class="rating">
+													★★★★★ <span class="score">4.9</span>
+												</div>
+												<small class="text-muted">Verified • 2023-05-10</small>
+											</div>
+											<div class="pill">Payments</div>
+										</div>
+										<p class="card-text">"Secure payment flow — I felt
+											confident entering my details. Quick confirmation via
+											e-ticket."</p>
+										<div class="mt-3 fw-bold">— Ashik C.</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+								<div class="card review-card h-100">
+									<div class="card-body">
+										<div
+											class="d-flex justify-content-between align-items-start mb-2">
+											<div>
+												<div class="rating">
+													★★★★★ <span class="score">4.8</span>
+												</div>
+												<small class="text-muted">Verified • 2023-04-14</small>
+											</div>
+											<div class="pill">Support</div>
+										</div>
+										<p class="card-text">"Customer support was responsive and
+											helpful. Everything was set up exactly as requested."</p>
+										<div class="mt-3 fw-bold">— P. Antony</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Slide 2 -->
+					<div class="carousel-item">
+						<div class="row gx-4 justify-content-center">
+							<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+								<div class="card review-card h-100">
+									<div class="card-body">
+										<div
+											class="d-flex justify-content-between align-items-start mb-2">
+											<div>
+												<div class="rating">
+													★★★★★ <span class="score">5.0</span>
+												</div>
+												<small class="text-muted">Verified • 2023-03-22</small>
+											</div>
+											<div class="pill">Reliability</div>
+										</div>
+										<p class="card-text">"Reliable coordination and perfect
+											event timing — professional all the way."</p>
+										<div class="mt-3 fw-bold">— Meera S.</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+								<div class="card review-card h-100">
+									<div class="card-body">
+										<div
+											class="d-flex justify-content-between align-items-start mb-2">
+											<div>
+												<div class="rating">
+													★★★★★ <span class="score">4.9</span>
+												</div>
+												<small class="text-muted">Verified • 2023-02-14</small>
+											</div>
+											<div class="pill">UX</div>
+										</div>
+										<p class="card-text">"Web interface is clean and booking
+											steps are intuitive. Very user-friendly."</p>
+										<div class="mt-3 fw-bold">— Ramesh T.</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+								<div class="card review-card h-100">
+									<div class="card-body">
+										<div
+											class="d-flex justify-content-between align-items-start mb-2">
+											<div>
+												<div class="rating">
+													★★★★★ <span class="score">4.8</span>
+												</div>
+												<small class="text-muted">Verified • 2023-01-05</small>
+											</div>
+											<div class="pill">Value</div>
+										</div>
+										<p class="card-text">"Great value and clear pricing. No
+											surprise charges — transparent and fair."</p>
+										<div class="mt-3 fw-bold">— Swathi P.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"
+						style="filter: invert(1)"></span> <span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#reviewsCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"
+						style="filter: invert(1)"></span> <span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="about-us" class="py-5"
+		style="background: linear-gradient(180deg, #120416 0%, #2b0934 65%); color: #efeef6;">
+		<div class="container">
+			<div class="row align-items-center gy-4">
+				<div class="col-lg-7">
+					<small
+						style="color: #ffd880; font-weight: 700; letter-spacing: .6px;">PLATFORM
+						OVERVIEW</small>
+					<h2
+						style="font-weight: 900; font-size: 2.4rem; color: #fff; margin-top: 10px; margin-bottom: 14px;">Online
+						Event Booking System</h2>
+
+					<p
+						style="color: #e7e4ef; font-size: 1rem; line-height: 1.7; max-width: 900px;">
+						Our platform streamlines event discovery and ticketing for
+						organisers and attendees. Browse live events, preview seating
+						maps, choose your preferred seats, complete secure payments and
+						receive instant e-tickets — all from a single, easy-to-use web
+						interface. Organizers gain powerful tools to publish events,
+						manage inventory, configure pricing tiers, and access real-time
+						sales analytics.</p>
+
+					<div class="row gx-3 gy-3 mt-4">
+						<div class="col-md-6 d-flex gap-3">
+							<div
+								style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(180deg, var(--accent-1, #5b2fe6), var(--accent-2, #ff8a00)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(91, 47, 230, 0.12); font-size: 20px;">🎟️</div>
+							<div>
+								<strong style="color: #fff; display: block;">Easy
+									Booking</strong><small style="color: #d7d2e8;">Search events,
+									select seats and checkout in a few taps.</small>
+							</div>
+						</div>
+
+						<div class="col-md-6 d-flex gap-3">
+							<div
+								style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(180deg, var(--accent-1, #5b2fe6), var(--accent-2, #ff8a00)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(91, 47, 230, 0.12); font-size: 20px;">🔒</div>
+							<div>
+								<strong style="color: #fff; display: block;">Secure
+									Payments</strong><small style="color: #d7d2e8;">PCI-aware flows,
+									encrypted checkout and multiple payment options.</small>
+							</div>
+						</div>
+
+						<div class="col-md-6 d-flex gap-3">
+							<div
+								style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(180deg, var(--accent-1, #5b2fe6), var(--accent-2, #ff8a00)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(91, 47, 230, 0.12); font-size: 20px;">📨</div>
+							<div>
+								<strong style="color: #fff; display: block;">Instant
+									e-Tickets</strong><small style="color: #d7d2e8;">QR-coded
+									tickets delivered by email & available in your account.</small>
+							</div>
+						</div>
+
+						<div class="col-md-6 d-flex gap-3">
+							<div
+								style="width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(180deg, var(--accent-1, #5b2fe6), var(--accent-2, #ff8a00)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(91, 47, 230, 0.12); font-size: 20px;">🧑‍💼</div>
+							<div>
+								<strong style="color: #fff; display: block;">Organizer
+									Tools</strong><small style="color: #d7d2e8;">Event publishing,
+									seat maps, promo codes, and real-time dashboards.</small>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-4">
+						<a href="#queries" class="btn"
+							style="background: linear-gradient(90deg, var(--accent-1, #5b2fe6), var(--accent-2, #ff8a00)); color: #fff; border-radius: 999px; padding: 10px 22px; font-weight: 800; box-shadow: 0 12px 28px rgba(91, 47, 230, 0.14);">Get
+							a free quote</a> <a href="#customer-reviews"
+							style="color: #f6e7ff; margin-left: 18px; font-weight: 700; text-decoration: underline;">Read
+							customer reviews</a>
+					</div>
+				</div>
+
+				<div class="col-lg-5">
+					<div
+						style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)); border-radius: 14px; padding: 28px; box-shadow: 0 12px 30px rgba(20, 8, 36, 0.6);">
+						<h5 style="color: #fff; font-weight: 800; margin-bottom: 14px;">What
+							this platform gives you</h5>
+						<ul
+							style="list-style: none; padding: 0; margin: 0; color: #e9e5f8; line-height: 1.9;">
+							<li>✓ Unified event marketplace and promoter portal</li>
+							<li>✓ Interactive seat selection with real-time availability</li>
+							<li>✓ Multiple payment methods & secure gateways</li>
+							<li>✓ Promo codes, group bookings and dynamic pricing</li>
+							<li>✓ Dedicated analytics dashboard & sales reports</li>
+						</ul>
+						<p style="color: #d6cfe9; margin-top: 12px;">Everything is
+							built for speed, reliability and a great mobile-first experience
+							— whether you’re attending, organizing or promoting an event.</p>
+
+						<div style="margin-top: 14px;">
+							<a href="register.html" class="btn"
+								style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.08); color: #fff; padding: 8px 20px; border-radius: 999px; font-weight: 700;">Create
+								an account</a> <a href="#queries"
+								style="color: var(--accent-2, #ff8a00); font-weight: 800; margin-left: 12px; text-decoration: underline;">Ask
+								about custom packages</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+@media ( max-width :992px) {
+	#about-us {
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+	#about-us .btn {
+		margin-bottom: 6px;
+	}
+}
+
+@media ( max-width :576px) {
+	#about-us h2 {
+		font-size: 1.6rem;
+	}
+	#about-us p {
+		font-size: 0.95rem;
+	}
+}
+</style>
+	</section>
+
+	<section id="queries" class="py-5"
+		style="background: linear-gradient(180deg, #16061a 0%, #2b0333 70%); color: #f1ecfb;">
+		<div class="container">
+			<div class="row gy-4 align-items-start">
+				<!-- Left: FAQ -->
+				<div class="col-lg-7">
+					<h3 style="color: #fff; font-weight: 800; margin-bottom: 10px;">Have
+						any questions about booking?</h3>
+					<p style="color: #d8cfe8; margin-bottom: 20px;">Below are
+						common booking questions — choose one to expand for details or
+						contact our team directly using the form.</p>
+
+					<div class="accordion" id="faqAccordion" style="max-width: 100%;">
+						<!-- FAQ items (kept text exactly as before) -->
+						<div class="accordion-item"
+							style="background: rgba(255, 255, 255, 0.02); border: none; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+							<h2 class="accordion-header" id="faqOne">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseOne"
+									aria-expanded="false" aria-controls="collapseOne"
+									style="background: transparent; color: #efe9ff;">How
+									does the booking process work?</button>
+							</h2>
+							<div id="collapseOne" class="accordion-collapse collapse"
+								data-bs-parent="#faqAccordion">
+								<div class="accordion-body"
+									style="color: #d8cfe8; background: transparent;">
+									1) Browse events and open the event page.<br> 2) Click
+									“View seats” to open the interactive seating map and select
+									available seats.<br> 3) Add selected seats to cart, review
+									your order and apply promo codes (if any).<br> 4) Complete
+									secure checkout using your preferred payment method.<br>
+									5) After payment you will receive an email with your e-ticket
+									(QR code) and the ticket is available in your account.
+								</div>
+							</div>
+						</div>
+
+						<div class="accordion-item"
+							style="background: rgba(255, 255, 255, 0.02); border: none; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+							<h2 class="accordion-header" id="faqTwo">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+									aria-expanded="false" aria-controls="collapseTwo"
+									style="background: transparent; color: #efe9ff;">What
+									payment methods do you accept?</button>
+							</h2>
+							<div id="collapseTwo" class="accordion-collapse collapse"
+								data-bs-parent="#faqAccordion">
+								<div class="accordion-body" style="color: #d8cfe8;">We
+									support major debit/credit cards, UPI, netbanking and popular
+									third-party wallets & gateways. All checkout flows are
+									processed through PCI-aware providers — we never store raw card
+									details on our servers.</div>
+							</div>
+						</div>
+
+						<div class="accordion-item"
+							style="background: rgba(255, 255, 255, 0.02); border: none; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+							<h2 class="accordion-header" id="faqThree">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseThree"
+									aria-expanded="false" aria-controls="collapseThree"
+									style="background: transparent; color: #efe9ff;">How
+									do I select seats and view the seating arrangement?</button>
+							</h2>
+							<div id="collapseThree" class="accordion-collapse collapse"
+								data-bs-parent="#faqAccordion">
+								<div class="accordion-body" style="color: #d8cfe8;">Click
+									“View seats” on the event page to open an interactive seating
+									map. Available seats are selectable, and the map shows pricing
+									tiers and accessibility options. Seat inventory updates in real
+									time to avoid double-booking.</div>
+							</div>
+						</div>
+
+						<div class="accordion-item"
+							style="background: rgba(255, 255, 255, 0.02); border: none; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+							<h2 class="accordion-header" id="faqFour">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseFour"
+									aria-expanded="false" aria-controls="collapseFour"
+									style="background: transparent; color: #efe9ff;">What
+									happens after payment — how do I get my e-ticket?</button>
+							</h2>
+							<div id="collapseFour" class="accordion-collapse collapse"
+								data-bs-parent="#faqAccordion">
+								<div class="accordion-body" style="color: #d8cfe8;">
+									Immediately after a successful payment you’ll receive an email
+									with your e-ticket (QR code) and a confirmation SMS (if phone
+									provided). You can also download or view tickets from your
+									account dashboard under “My Bookings”.</div>
+							</div>
+						</div>
+
+						<div class="accordion-item"
+							style="background: rgba(255, 255, 255, 0.02); border: none; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+							<h2 class="accordion-header" id="faqFive">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseFive"
+									aria-expanded="false" aria-controls="collapseFive"
+									style="background: transparent; color: #efe9ff;">What
+									is the cancellation or refund policy?</button>
+							</h2>
+							<div id="collapseFive" class="accordion-collapse collapse"
+								data-bs-parent="#faqAccordion">
+								<div class="accordion-body" style="color: #d8cfe8;">
+									Cancellation and refund policies vary by event and promoter.
+									Always check the event terms before booking. For eligible
+									refunds, requests are handled by support and processed within
+									7–14 business days depending on the payment provider.</div>
+							</div>
+						</div>
+
+						<div class="accordion-item"
+							style="background: rgba(255, 255, 255, 0.02); border: none; margin-bottom: 12px; border-radius: 10px; overflow: hidden;">
+							<h2 class="accordion-header" id="faqSix">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseSix"
+									aria-expanded="false" aria-controls="collapseSix"
+									style="background: transparent; color: #efe9ff;">Can I
+									transfer my ticket to someone else?</button>
+							</h2>
+							<div id="collapseSix" class="accordion-collapse collapse"
+								data-bs-parent="#faqAccordion">
+								<div class="accordion-body" style="color: #d8cfe8;">
+									Transfer policies depend on the event. Some events allow name
+									changes or transfers, others require attendee names for
+									security. Contact support with your booking reference for help
+									— we’ll advise based on the event’s specific rules.</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- Right: Contact form -->
+				<div class="col-lg-5">
+					<div
+						style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); border-radius: 14px; padding: 26px; box-shadow: 0 12px 34px rgba(10, 3, 25, 0.6);">
+						<h5 style="color: #fff; font-weight: 800; margin-bottom: 8px;">Send
+							us a message</h5>
+						<p style="color: #d6cfe8; margin-bottom: 18px;">Ask about
+							booking, payment methods, event availability or seat selection —
+							our team will reply within one business day.</p>
+
+						<form id="queryForm" onsubmit="handleQuerySubmit(event)"
+							novalidate>
+							<div class="mb-3">
+								<input id="qname" type="text" class="form-control dark-input"
+									placeholder="Your name" required
+									style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.03); color: #efeaf6;">
+							</div>
+							<div class="mb-3">
+								<input id="qemail" type="email" class="form-control dark-input"
+									placeholder="Email address" required
+									style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.03); color: #efeaf6;">
+							</div>
+							<div class="mb-3">
+								<textarea id="qmsg" rows="5" class="form-control dark-input"
+									placeholder="Tell us your question (e.g. payment process, seat selection)"
+									required
+									style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.03); color: #efeaf6;"></textarea>
+							</div>
+
+							<div class="d-grid">
+								<button type="submit" class="btn"
+									style="background: linear-gradient(90deg, var(--accent-1, #5b2fe6), var(--accent-2, #ff8a00)); color: #fff; border-radius: 999px; padding: 12px 18px; font-weight: 800;">Submit
+									Query</button>
+							</div>
+							<div id="queryAlert" style="display: none; margin-top: 12px;"></div>
+						</form>
+
+						<div style="margin-top: 16px; color: #d6cfe8; font-size: 0.92rem;">
+							<strong>Need urgent support?</strong><br> Email: <a
+								href="mailto:support@eventease.com" style="color: #ffd07a;">support@eventease.com</a><br>
+							Phone: <span style="color: #ffd07a;">+91-98765-43210</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- local styles -->
+		<style>
+.accordion-button {
+	box-shadow: none !important;
+	border: none !important;
+	padding: 18px 20px;
+	font-weight: 700;
+	font-size: 1rem;
+	color: #efeefc;
+}
+
+.accordion-button::after {
+	filter: invert(1);
+	opacity: 0.9;
+}
+
+.accordion-body {
+	padding: 16px 20px;
+}
+
+.dark-input::placeholder {
+	color: rgba(230, 220, 245, 0.6);
+}
+
+.dark-input:focus {
+	outline: none;
+	box-shadow: 0 6px 22px rgba(91, 47, 230, 0.12);
+	border-color: rgba(255, 255, 255, 0.06);
+}
+
+@media ( max-width :992px) {
+	.accordion-button {
+		padding: 14px 16px;
+		font-size: 0.95rem;
+	}
+	.accordion-body {
+		padding: 12px 14px;
+	}
+}
+</style>
+
+		<!-- demo form handler -->
+		<script>
+      function handleQuerySubmit(e){
+        e.preventDefault();
+        const name = document.getElementById('qname').value.trim();
+        const alertEl = document.getElementById('queryAlert');
+        alertEl.style.display = 'block';
+        alertEl.className = 'alert alert-info';
+        alertEl.textContent = 'Sending your message...';
+        setTimeout(()=> {
+          alertEl.className = 'alert alert-success';
+          alertEl.textContent = `Thanks${name ? ', ' + name : ''}! We received your query and will respond shortly.`;
+          document.getElementById('queryForm').reset();
+          setTimeout(()=> alertEl.style.display = 'none', 4500);
+        }, 900);
+      }
+    </script>
+	</section>
+
+	<footer id="siteFooter">
+		<div class="container">
+			<div class="row g-4 align-items-start">
+				<!-- Logo + blurb + socials -->
+				<div class="col-lg-4 col-md-6">
+					<div style="display: flex; gap: 18px; align-items: flex-start;">
+						<img src="img/logo.png" alt="EventEase logo"
+							style="width: 84px; height: 84px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);">
+						<div>
+							<h4 style="margin: 0 0 6px 0; color: #fff; font-weight: 800;">EventEase</h4>
+							<p
+								style="margin: 0; color: #d3c7e8; line-height: 1.6; max-width: 340px;">Your
+								go-to online platform to discover, book and manage events.
+								Simple checkout, instant e-tickets and real-time seat selection
+								— all in one seamless experience.</p>
+
+							<div
+								style="margin-top: 14px; display: flex; gap: 10px; align-items: center;">
+								<a href="https://wa.me/919876543210" target="_blank"
+									title="WhatsApp" class="social-pill"
+									style="background: #25D366; color: #fff;"><i
+									class="bi bi-whatsapp"></i></a> <a href="https://t.me/EventEase"
+									target="_blank" title="Telegram" class="social-pill"
+									style="background: #0088cc; color: #fff;"><i
+									class="bi bi-telegram"></i></a> <a href="https://instagram.com"
+									target="_blank" title="Instagram" class="social-pill"
+									style="background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); color: #fff;"><i
+									class="bi bi-instagram"></i></a> <a href="https://linkedin.com"
+									target="_blank" title="LinkedIn" class="social-pill"
+									style="background: #0A66C2; color: #fff;"><i
+									class="bi bi-linkedin"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contact card -->
+				<div class="col-lg-3 col-md-6">
+					<div
+						style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 18px 16px; box-shadow: 0 8px 30px rgba(16, 3, 20, 0.45);">
+						<h6 style="color: #fff; font-weight: 800; margin-bottom: 10px;">Contact</h6>
+						<p style="margin: 0 0 8px 0; color: #d3c7e8;">EventEase
+							Customer Support</p>
+						<p style="margin: 0 0 6px 0; color: #ffd8a8;">
+							<strong>Email:</strong> <a href="mailto:support@eventease.com"
+								style="color: #ffd8a8; text-decoration: none;">support@eventease.com</a>
+						</p>
+						<p style="margin: 0 0 6px 0; color: #ffd8a8;">
+							<strong>Phone:</strong> <span style="color: #ffd8a8;">+91-98765-43210</span>
+						</p>
+						<p style="margin: 0; color: #c9bfe4;">
+							<small>Support hours: 9AM–8PM (Mon–Sat)</small>
+						</p>
+
+						<div style="margin-top: 12px; display: flex; gap: 8px;">
+							<a href="mailto:support@eventease.com" class="btn btn-sm"
+								style="background: linear-gradient(90deg, #5b2fe6, #ff8a00); color: #fff; border-radius: 999px; font-weight: 700; padding: 8px 12px; box-shadow: 0 8px 22px rgba(91, 47, 230, 0.12);">Email
+								us</a> <a href="contact.html" class="btn btn-sm"
+								style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.06); color: #e7dff6; border-radius: 999px; padding: 8px 12px;">Contact
+								page</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- Quick Links -->
+				<div class="col-lg-3 col-md-6">
+					<h6 style="color: #fff; font-weight: 800; margin-bottom: 12px;">Quick
+						Links</h6>
+					<ul
+						style="list-style: none; padding: 0; margin: 0; color: #d3c7e8; line-height: 2;">
+						<li><a href="index.html#home"
+							style="color: inherit; text-decoration: none;">Home</a></li>
+						<li><a href="register.html"
+							style="color: inherit; text-decoration: none;">Register /
+								Login</a></li>
+						<li><a href="browse.html#theatre-events"
+							style="color: inherit; text-decoration: none;">Browse Events</a></li>
+						<li><a href="seats.html"
+							style="color: inherit; text-decoration: none;">View Seats</a></li>
+						<li><a href="booktickets.html"
+							style="color: inherit; text-decoration: none;">Book Tickets</a></li>
+						<li><a href="etickets.html"
+							style="color: inherit; text-decoration: none;">E-Tickets</a></li>
+						<li><a href="contact.html"
+							style="color: inherit; text-decoration: none;">Contact</a></li>
+					</ul>
+				</div>
+
+				<!-- Newsletter -->
+				<div class="col-lg-2 col-md-6">
+					<h6 style="color: #fff; font-weight: 800; margin-bottom: 12px;">Stay
+						updated</h6>
+					<p style="color: #d3c7e8; margin-bottom: 10px; font-size: 0.95rem;">Join
+						our newsletter for early access to tickets & exclusive offers.</p>
+					<form id="footerNews"
+						onsubmit="event.preventDefault(); alert('Thanks — newsletter subscribed (demo)');">
+						<div style="display: flex; gap: 8px;">
+							<input type="email" placeholder="Your email" required
+								style="flex: 1; padding: 10px 12px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.06); background: rgba(255, 255, 255, 0.02); color: #fff;">
+						</div>
+						<div style="margin-top: 10px;">
+							<button type="submit"
+								style="width: 100%; background: linear-gradient(90deg, #5b2fe6, #ff8a00); border: none; padding: 10px 12px; color: #fff; border-radius: 999px; font-weight: 700;">Subscribe</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+			<!-- /.row -->
+
+			<!-- bottom bar -->
+			<div
+				style="border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: 34px; padding-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+				<div style="color: #bfb4d8; font-size: 0.92rem;">© 2025
+					EventEase. All rights reserved.</div>
+				<div style="display: flex; gap: 18px; align-items: center;">
+					<a href="privacy.html"
+						style="color: #d3c7e8; text-decoration: none;">Privacy Policy</a>
+					<a href="terms.html" style="color: #d3c7e8; text-decoration: none;">Terms
+						of Service</a>
+				</div>
+			</div>
+		</div>
+
+		<style>
+@media ( max-width :991px) {
+	#siteFooter .col-lg-4, #siteFooter .col-lg-3, #siteFooter .col-lg-2 {
+		text-align: left;
+	}
+}
+
+@media ( max-width :575px) {
+	.social-pill {
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+	}
+}
+</style>
+	</footer>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+    /* Preload images (keeps original list) */
+    (function preload(){
+      const imgs = ['img/slide1.jpg','img/slide2.jpg','img/slide3.jpg','img/slide4.jpg','img/logo-footer.png'];
+      imgs.forEach(s=>{ const i=new Image(); i.src=s; });
+    })();
+
+    /* Load header.html into #header and set CSS var --page-offset to avoid content hiding under fixed header */
+    (function loadHeaderAndSetOffset(){
+      const headerContainer = document.getElementById('header');
+      const headerWrapper   = document.getElementById('headerWrapper');
+      const cssVar          = '--page-offset';
+      function setOffset(px){ document.documentElement.style.setProperty(cssVar, px + 'px'); }
+      function measureAndApply(){ const el = headerWrapper || headerContainer; if(!el) return; const h = Math.min(240, Math.ceil(el.getBoundingClientRect().height) || 0); setOffset(h); }
+      function debounce(fn,wait=80){ let t; return (...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),wait);} }
+
+      fetch('header.html').then(r=>r.text()).then(html=>{
+        headerContainer.innerHTML = html;
+        setTimeout(measureAndApply,60);
+        if('ResizeObserver' in window){
+          const ro = new ResizeObserver(debounce(measureAndApply,60));
+          ro.observe(headerWrapper || headerContainer);
+        }
+        window.addEventListener('resize', debounce(measureAndApply,80));
+      }).catch(()=> setOffset(120));
+    })();
+
+    /* Initialize hero carousel with 10s interval and ensure it cycles */
+    document.addEventListener('DOMContentLoaded', function(){
+      const el = document.getElementById('heroCarousel');
+      if (!el) return;
+      try {
+        const carousel = new bootstrap.Carousel(el, { interval:10000, ride:'carousel', pause:false, wrap:true });
+        carousel.cycle();
+      } catch(e){ console.error('Carousel init error:', e); }
+    });
+
+    /* Hero text animation tied to slide events */
+    (function heroAnimations(){
+      const carousel = document.getElementById('heroCarousel');
+      const title = document.getElementById('heroTitle');
+      const desc  = document.getElementById('heroDesc');
+      const actions = document.getElementById('heroActions');
+      function show(){ if(title) { title.style.opacity='1'; title.style.transform='translateY(0)'; } if(desc){ desc.style.opacity='1'; desc.style.transform='translateY(0)'; } if(actions){ actions.style.opacity='1'; actions.style.transform='translateY(0)'; } }
+      function hide(){ if(title){ title.style.opacity='0'; title.style.transform='translateY(14px)'; } if(desc){ desc.style.opacity='0'; desc.style.transform='translateY(12px)'; } if(actions){ actions.style.opacity='0'; actions.style.transform='translateY(12px)'; } }
+      window.addEventListener('load', ()=> setTimeout(show, 260));
+      if(carousel){ carousel.addEventListener('slide.bs.carousel', hide); carousel.addEventListener('slid.bs.carousel', ()=> setTimeout(show, 220)); }
+    })();
   </script>
-
-  <!-- Hero Section -->
-  <section class="hero d-flex align-items-center">
-    <div class="container text-center text-white">
-      <h1 class="hero-title">EVENTS</h1>
-      <h2 class="hero-subtitle">BOOKING</h2>
-      <h3 class="hero-welcome">
-        Welcome to <span class="eventease">EventEase</span>!
-      </h3>
-      <p class="hero-desc mt-3">
-        Where Every Moment Becomes a Memory. <br>
-        Discover, Book, and Experience Events Like Never Before – From Concerts and Sports to Theatre and Festivals.
-      </p>
-      <button class="btn btn-warning btn-lg mt-3" onclick="window.location.href='register.html'">
-        Explore Events
-      </button>
-    </div>
-  </section>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

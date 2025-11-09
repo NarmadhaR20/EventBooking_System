@@ -2,339 +2,549 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Browse Events | EventEase</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
-  <style>
-    .browsepage {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: url('img/browse-bk1.jpg') no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Browse Events | EventEase</title>
+
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="style.css" />
+
+<style>
+body.browsepage {
+	margin: 0;
+	padding: 0;
+	font-family: 'Poppins', Arial, sans-serif;
+	background: url('img/browse-bk1.jpg') no-repeat center center fixed;
+	background-size: cover;
+	min-height: 100vh;
+}
+
+h2.section-title span {
+	color: #ffb64d;
+}
+
+.card {
+	position: relative; /* ensures z-index works */
+	z-index: 5; /* higher than common overlays */
+}
+
+.card .btn-book {
+	position: relative;
+	z-index: 6;
+	pointer-events: auto; /* ensure clickable */
+	cursor: pointer;
+}
+
+.card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+	background-color: #f8f9fa;
+}
+
+.btn-book:hover {
+	background: linear-gradient(90deg, #ff8a00, #5b2fe6);
+	transform: scale(1.05);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+	filter: invert(1);
+}
+
+@media ( max-width : 768px) {
+	.card-body img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+.header-wrapper {
+	pointer-events: auto;
+}
+
+.hero-overlay {
+	pointer-events: none; /* clicks pass through to elements beneath */
+}
+</style>
 </head>
-<div id="header"></div>
-<script>
+
+<body class="browsepage">
+
+	<!-- HEADER -->
+	<div id="header"></div>
+	<script>
+  // Load header from external file
   fetch("header.html")
     .then(res => res.text())
     .then(data => {
       document.getElementById("header").innerHTML = data;
+
+      // Once header is loaded, make navbar fixed and handle scroll effect
+      const navbar = document.querySelector(".navbar");
+      if (navbar) {
+        navbar.classList.add("fixed-top", "custom-navbar");
+
+        // Optional: scroll color change effect
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
+        });
+      }
     });
 </script>
 
-<body class="browsepage">
 
-  <!-- ===================== Theatre Section ===================== -->
-  <section id="theatre-events" class="event-section">
-    <div class="container">
-      <h2 class="section-title"
-        style="text-align: center; margin-bottom: 30px; padding-top: 30px; color: white; font-weight: bold;">
-        Welcome to <span class="browseone"></span>!
-      </h2>
-      <div id="theatreCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              <!-- Event 1 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 1</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/t1.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Delhi<br> Date: Sept 10, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 1" data-location="Delhi">Book Now</button>
-                  </div>
-                </div>
-              </div>
+	<!-- ===================== THEATRE SECTION ===================== -->
+	<section id="theatre-events" class="event-section">
+		<div class="container">
+			<h2 class="section-title text-center text-white fw-bold mb-4 pt-4"
+				style='margin-bottom: 140px'>
+				Welcome to <span class="browseone">Theatre Events</span>!
+			</h2>
+			<div id="theatreCarousel" class="carousel slide"
+				data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="row text-center">
+							<!-- Theatre Cards -->
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 1</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/t1.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Delhi<br>
+											<strong>Date:</strong> Sept 10, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 1"
+											data-location="Delhi">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 2 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 2</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/t2.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Chennai<br> Date: May 30, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 2" data-location="Chennai">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 2</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/t2.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Chennai<br>
+											<strong>Date:</strong> May 30, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 2"
+											data-location="Chennai">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 3 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 3</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/t3.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Bengaluru<br> Date: Jan 8, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 3" data-location="Bengaluru">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 3</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/t3.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Bengaluru<br>
+											<strong>Date:</strong> Jan 8, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 3"
+											data-location="Bengaluru">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 4 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 4</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/t4.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Coimbatore<br> Date: Dec 15, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 4" data-location="Coimbatore">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 4</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/t4.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Coimbatore<br>
+											<strong>Date:</strong> Dec 15, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 4"
+											data-location="Coimbatore">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-            </div>
-          </div>
-        </div>
+						</div>
+					</div>
+				</div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#theatreCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#theatreCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
-    </div>
-  </section>
+				<!-- Carousel Controls -->
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#theatreCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#theatreCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</button>
+			</div>
+		</div>
+	</section>
 
-  <!-- ===================== Concert Section ===================== -->
-  <section id="concert-events" class="event-section">
-    <div class="container">
-      <h2 class="section-title"
-        style="text-align: center; margin-bottom: 30px; padding-top: 30px; color: white; font-weight: bold;">Welcome
-        to <span class="browsetwo"></span>!</h2>
-      <div id="concertCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              <!-- Event 1 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 1</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/c1.png" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Madurai<br> Date: June 28, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 1" data-location="Madurai">Book Now</button>
-                  </div>
-                </div>
-              </div>
+	<!-- ===================== CONCERT SECTION ===================== -->
+	<section id="concert-events" class="event-section">
+		<div class="container">
+			<h2 class="section-title text-center text-white fw-bold mb-4 pt-4">
+				Welcome to <span class="browsetwo">Concert Events</span>!
+			</h2>
+			<div id="concertCarousel" class="carousel slide"
+				data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="row text-center">
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 1</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/c1.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Madurai<br>
+											<strong>Date:</strong> June 28, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 1"
+											data-location="Madurai">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 2 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 2</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/c2.jpeg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Tirunelveli<br> Date: Nov 2, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 2" data-location="Tirunelveli">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 2</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/c2.jpeg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Tirunelveli<br>
+											<strong>Date:</strong> Nov 2, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 2"
+											data-location="Tirunelveli">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 3 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 3</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/c3.png" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Kanchipuram<br> Date: July 21, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 3" data-location="Kanchipuram">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 3</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/c3.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Kanchipuram<br>
+											<strong>Date:</strong> July 21, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 3"
+											data-location="Kanchipuram">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 4 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 4</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/c4.png" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Kanyakumari<br> Date: Feb 16, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 4" data-location="Kanyakumari">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 4</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/c4.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Kanyakumari<br>
+											<strong>Date:</strong> Feb 16, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 4"
+											data-location="Kanyakumari">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-            </div>
-          </div>
-        </div>
+						</div>
+					</div>
+				</div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#concertCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#concertCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
-    </div>
-  </section>
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#concertCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#concertCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</button>
+			</div>
+		</div>
+	</section>
 
-  <!-- ===================== Sports Section ===================== -->
-  <section id="sports-events" class="event-section">
-    <div class="container">
-      <h2 class="section-title"
-        style="text-align: center; margin-bottom: 30px; padding-top: 30px; color: white; font-weight: bold;">
-        Welcome to <span class="browsethree"></span>!
-      </h2>
-      <div id="sportsCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              <!-- Event 1 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 1</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/s1.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Salem<br> Date: March 23, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 1" data-location="Salem">Book Now</button>
-                  </div>
-                </div>
-              </div>
+	<!-- ===================== SPORTS SECTION ===================== -->
+	<section id="sports-events" class="event-section">
+		<div class="container">
+			<h2 class="section-title text-center text-white fw-bold mb-4 pt-4">
+				Welcome to <span class="browsethree">Sports Events</span>!
+			</h2>
+			<div id="sportsCarousel" class="carousel slide"
+				data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="row text-center">
+							<!-- Sports cards (same as before) -->
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 1</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/s1.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Salem<br>
+											<strong>Date:</strong> March 23, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 1"
+											data-location="Salem">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 2 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 2</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/s2.png" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Coimbatore<br> Date: Oct 13, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 2" data-location="Coimbatore">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 2</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/s2.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Coimbatore<br>
+											<strong>Date:</strong> Oct 13, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 2"
+											data-location="Coimbatore">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 3 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 3</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/s3.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Chennai<br> Date: April 5, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 3" data-location="Chennai">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 3</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/s3.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Chennai<br>
+											<strong>Date:</strong> April 5, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 3"
+											data-location="Chennai">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-              <!-- Event 4 -->
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-header">
-                    <h2 class="text-primary">EVENT 4</h2>
-                  </div>
-                  <div class="card-body">
-                    <img src="img/s4.jpg" style="width:250px; height:200px">
-                    <p style="margin-left: 50px; margin-top: 20px;">
-                      <strong>Location: Thanjavur<br> Date: May 4, 2025</strong>
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <button class="btn btn-book" data-event="EVENT 4" data-location="Thanjavur">Book Now</button>
-                  </div>
-                </div>
-              </div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">EVENT 4</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/s4.jpg" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Thanjavur<br>
+											<strong>Date:</strong> May 4, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="EVENT 4"
+											data-location="Thanjavur">Book Now</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-            </div>
-          </div>
-        </div>
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#sportsCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#sportsCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</button>
+			</div>
+		</div>
+	</section>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#sportsCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#sportsCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
-    </div>
-  </section>
+	<!-- ===================== LAUGHTER THERAPY SECTION ===================== -->
+	<section id="laughter-events" class="event-section">
+		<div class="container">
+			<h2 class="section-title text-center text-white fw-bold mb-4 pt-4">
+				Welcome to <span class="browsethree">Laughter Therapy
+					Sessions</span>!
+			</h2>
+			<div id="laughterCarousel" class="carousel slide"
+				data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="row text-center">
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">SESSION 1</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/b1.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Chennai<br>
+											<strong>Date:</strong> Jan 15, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="SESSION 1"
+											data-location="Chennai">Book Now</button>
+									</div>
+								</div>
+							</div>
 
-  <!-- ===================== Book Button JS ===================== -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="script.js"></script>
-  <script>
-    document.querySelectorAll('.btn-book').forEach(button => {
-      button.addEventListener('click', function () {
-        const eventName = this.getAttribute('data-event');
-        const location = this.getAttribute('data-location');
-        window.location.href = `seats.html?event=${encodeURIComponent(eventName)}&location=${encodeURIComponent(location)}`;
-      });
-    });
-  </script>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">SESSION 2</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/b2.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Coimbatore<br>
+											<strong>Date:</strong> Feb 10, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="SESSION 2"
+											data-location="Coimbatore">Book Now</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">SESSION 3</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/b3.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Madurai<br>
+											<strong>Date:</strong> Mar 12, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="SESSION 3"
+											data-location="Madurai">Book Now</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-header">
+										<h2 class="text-primary">SESSION 4</h2>
+									</div>
+									<div class="card-body">
+										<img src="img/b4.png" style="width: 250px; height: 200px">
+										<p>
+											<strong>Location:</strong> Salem<br>
+											<strong>Date:</strong> Apr 20, 2025
+										</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-book" data-event="SESSION 4"
+											data-location="Salem">Book Now</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#laughterCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#laughterCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</button>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===================== BOOK BUTTON SCRIPT ===================== -->
+	<script>
+  // delegated click handler — always works even if buttons are added later
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.btn-book');
+    if (!btn) return;
+    const eventName = btn.getAttribute('data-event');
+    const location = btn.getAttribute('data-location');
+
+    if (!eventName || !location) {
+      console.warn('Missing data-event or data-location', btn);
+      return;
+    }
+
+    // optional debug
+    console.log('Booking click:', eventName, location);
+
+    // redirect to seats page
+    window.location.href = `seats.html?event=${encodeURIComponent(eventName)}&location=${encodeURIComponent(location)}`;
+  });
+</script>
+
+
+	<!-- Bootstrap JS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

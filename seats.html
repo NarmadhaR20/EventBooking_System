@@ -1,103 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Select Seats | EventEase</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('img/browse-bk1.jpg') center/cover no-repeat fixed;
-      min-height: 100vh; color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .container { max-width: 900px; }
-    .progress { height: 28px; border-radius: 50px; background: rgba(255,255,255,0.1); margin-bottom: 30px; }
-    .progress-bar { background: #28a745; font-weight: 600; border-radius: 50px; display: flex; align-items: center; justify-content: center; }
-    .event-header h3 { font-size: 1.8rem; font-weight: 700; color: #28a745; margin-bottom: 4px; }
-    .event-header p { color: #ddd; font-size: 1rem; margin: 0; }
-    h2 { font-weight: 700; font-size: 2.2rem; text-align: center; margin-bottom: 12px; color: #fff; }
-    p.text-center { color: #ccc; font-size: 1.1rem; margin-bottom: 20px; }
-    .control-panel { background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 16px; backdrop-filter: blur(5px); margin: 30px 0; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-    .form-label { font-weight: 600; color: #f0f0f0; margin-bottom: 8px; font-size: 0.95rem; }
-    .form-select, .form-control { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 12px; padding: 10px 14px; font-size: 1rem; }
-    #seatRows { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; margin: 20px 0; padding: 20px; background: rgba(0, 0, 0, 0.3); border-radius: 16px; justify-items: center; }
-    .seat { width: 52px; height: 52px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; cursor: pointer; }
-    .available { background: #28a745; color: white; }
-    .available:hover { background: #218838; transform: translateY(-4px) scale(1.05); }
-    .selected { background: #ffc107; color: #212529; transform: scale(1.1); }
-    .booked { background: #6c757d; color: #ccc; cursor: not-allowed; opacity: 0.6; }
-    h5 { font-size: 1.4rem; font-weight: 600; text-align: center; margin: 30px 0 20px; color: #ffc107; }
-    #confirmBtn { background: #28a745; border: none; color: white; font-weight: 600; padding: 14px 40px; border-radius: 50px; font-size: 1.2rem; width: fit-content; margin: 30px auto; display: block; }
-    .modal-content { background: rgba(0, 0, 0, 0.92); color: white; border: none; border-radius: 20px; }
-    #bookSeatsBtn { background: #28a745; color: white; border: none; padding: 10px 24px; border-radius: 50px; font-weight: 600; text-decoration: none; display: inline-block; }
-    #seatStats { text-align:center; margin-bottom: 10px; font-size:1.1rem; color:#ccc; }
-    @media (max-width: 768px) { #seatRows { grid-template-columns: repeat(6, 1fr); } .seat { width: 46px; height: 46px; } }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Select Seats | EventEase</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<style>
+body {
+	background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+		url('img/browse-bk1.jpg') center/cover no-repeat fixed;
+	min-height: 100vh;
+	color: #fff;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+	max-width: 900px;
+}
+
+.progress {
+	height: 28px;
+	border-radius: 50px;
+	background: rgba(255, 255, 255, 0.1);
+	margin-bottom: 30px;
+}
+
+.progress-bar {
+	background: #28a745;
+	font-weight: 600;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.event-header h3 {
+	font-size: 1.8rem;
+	font-weight: 700;
+	color: #28a745;
+	margin-bottom: 4px;
+}
+
+.event-header p {
+	color: #ddd;
+	font-size: 1rem;
+	margin: 0;
+}
+
+h2 {
+	font-weight: 700;
+	font-size: 2.2rem;
+	text-align: center;
+	margin-bottom: 12px;
+	color: #fff;
+}
+
+p.text-center {
+	color: #ccc;
+	font-size: 1.1rem;
+	margin-bottom: 20px;
+}
+
+.control-panel {
+	background: rgba(255, 255, 255, 0.08);
+	padding: 20px;
+	border-radius: 16px;
+	backdrop-filter: blur(5px);
+	margin: 30px 0;
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	flex-wrap: wrap;
+}
+
+.form-label {
+	font-weight: 600;
+	color: #f0f0f0;
+	margin-bottom: 8px;
+	font-size: 0.95rem;
+}
+
+.form-select, .form-control {
+	background: rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	color: white;
+	border-radius: 12px;
+	padding: 10px 14px;
+	font-size: 1rem;
+}
+
+#seatRows {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	gap: 10px;
+	margin: 20px 0;
+	padding: 20px;
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 16px;
+	justify-items: center;
+}
+
+.seat {
+	width: 52px;
+	height: 52px;
+	border-radius: 12px;
+	font-weight: bold;
+	font-size: 0.85rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.available {
+	background: #28a745;
+	color: white;
+}
+
+.available:hover {
+	background: #218838;
+	transform: translateY(-4px) scale(1.05);
+}
+
+.selected {
+	background: #ffc107;
+	color: #212529;
+	transform: scale(1.1);
+}
+
+.booked {
+	background: #6c757d;
+	color: #ccc;
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+h5 {
+	font-size: 1.4rem;
+	font-weight: 600;
+	text-align: center;
+	margin: 30px 0 20px;
+	color: #ffc107;
+}
+
+#confirmBtn {
+	background: #28a745;
+	border: none;
+	color: white;
+	font-weight: 600;
+	padding: 14px 40px;
+	border-radius: 50px;
+	font-size: 1.2rem;
+	width: fit-content;
+	margin: 30px auto;
+	display: block;
+}
+
+.modal-content {
+	background: rgba(0, 0, 0, 0.92);
+	color: white;
+	border: none;
+	border-radius: 20px;
+}
+
+#bookSeatsBtn {
+	background: #28a745;
+	color: white;
+	border: none;
+	padding: 10px 24px;
+	border-radius: 50px;
+	font-weight: 600;
+	text-decoration: none;
+	display: inline-block;
+}
+
+#seatStats {
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 1.1rem;
+	color: #ccc;
+}
+
+@media ( max-width : 768px) {
+	#seatRows {
+		grid-template-columns: repeat(6, 1fr);
+	}
+	.seat {
+		width: 46px;
+		height: 46px;
+	}
+}
+</style>
 </head>
 <body>
 
-<div id="header"></div>
-<script>
+	<div id="header"></div>
+	<script>
   fetch("header.html").then(r => r.text()).then(data => document.getElementById("header").innerHTML = data);
 </script>
 
-<div class="container mt-4">
-  <div class="progress"><div class="progress-bar">Step 1: Select Seats</div></div>
-  <div class="event-header text-center mb-4">
-    <h3 id="eventNameHeader"></h3>
-    <p id="locationHeader"></p>
-  </div>
+	<div class="container mt-4">
+		<div class="progress">
+			<div class="progress-bar">Step 1: Select Seats</div>
+		</div>
+		<div class="event-header text-center mb-4">
+			<h3 id="eventNameHeader"></h3>
+			<p id="locationHeader"></p>
+		</div>
 
-  <h2>Select Your Seats</h2>
-  <p class="text-center">Click on available seats (green) to select. Max <span id="maxTickets">1</span> tickets.</p>
+		<h2>Select Your Seats</h2>
+		<p class="text-center">
+			Click on available seats (green) to select. Max <span id="maxTickets">1</span>
+			tickets.
+		</p>
 
-  <div class="control-panel">
-    <div>
-      <label for="category" class="form-label">Seat Category</label>
-      <select id="category" class="form-select">
-        <option value="100">Regular - ₹100</option>
-        <option value="150">Premium - ₹150</option>
-        <option value="200">VIP - ₹200</option>
-      </select>
-    </div>
-    <div>
-      <label for="ticketCount" class="form-label">No. of Tickets</label>
-      <input type="number" id="ticketCount" class="form-control" min="1" max="8" value="1" />
-    </div>
-  </div>
+		<div class="control-panel">
+			<div>
+				<label for="category" class="form-label">Seat Category</label> <select
+					id="category" class="form-select">
+					<option value="100">Regular - ₹100</option>
+					<option value="150">Premium - ₹150</option>
+					<option value="200">VIP - ₹200</option>
+				</select>
+			</div>
+			<div>
+				<label for="ticketCount" class="form-label">No. of Tickets</label> <input
+					type="number" id="ticketCount" class="form-control" min="1" max="8"
+					value="1" />
+			</div>
+		</div>
 
-  <div id="seatStats">Available Seats: 0 / Booked Seats: 0</div>
-  <div id="seatRows"></div>
+		<div id="seatStats">Available Seats: 0 / Booked Seats: 0</div>
+		<div id="seatRows"></div>
 
-  <h5>Total Price: ₹<span id="totalPrice">0</span></h5>
-  <button id="confirmBtn" class="btn">Confirm Selection</button>
-</div>
+		<h5>
+			Total Price: ₹<span id="totalPrice">0</span>
+		</h5>
+		<button id="confirmBtn" class="btn">Confirm Selection</button>
+	</div>
 
-<!-- Modal -->
-<div class="modal fade" id="seatModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Confirm Your Selection</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Event:</strong> <span id="modalEventName"></span></p>
-        <p><strong>Location:</strong> <span id="modalLocation"></span></p>
-        <p id="confirmedSeats"><strong>Seats:</strong> None</p>
-        <p id="confirmedPrice"><strong>Total:</strong> ₹0</p>
-      </div>
-      <div class="modal-footer">
-        <button id="bookSeatsBtn" class="btn btn-success">Proceed to Booking</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Edit</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- Modal -->
+	<div class="modal fade" id="seatModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Confirm Your Selection</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<p>
+						<strong>Event:</strong> <span id="modalEventName"></span>
+					</p>
+					<p>
+						<strong>Location:</strong> <span id="modalLocation"></span>
+					</p>
+					<p id="confirmedSeats">
+						<strong>Seats:</strong> None
+					</p>
+					<p id="confirmedPrice">
+						<strong>Total:</strong> ₹0
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button id="bookSeatsBtn" class="btn btn-success">Proceed
+						to Booking</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Edit</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
 const urlParams = new URLSearchParams(window.location.search);
 const eventName = urlParams.get('event') || 'Unknown Event';
 const eventLocation = urlParams.get('location') || 'Unknown Location';
